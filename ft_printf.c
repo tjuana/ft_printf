@@ -6,7 +6,7 @@
 /*   By: ccriston <ccriston@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/22 16:16:07 by ccriston          #+#    #+#             */
-/*   Updated: 2020/02/24 16:07:17 by ccriston         ###   ########.fr       */
+/*   Updated: 2020/02/24 16:35:31 by ccriston         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,32 +14,20 @@
 #include <stdarg.h>
 #include <stdlib.h>
 #include <unistd.h>
+#include "libft/libft.h"
 
-void	ft_putchar(char c)
-{
-	write(1, &c, 1);
-}
 
-void	ft_putstr(char const *s)
-{
-	if (s)
-	{
-		while (*s != '\0')
-		{
-			ft_putchar((int)*s);
-			s++;
-		}
-	}
-}
 
 
 
 int		parse_percent(char **format)
 {
 	int		i;
+	char	let;
 
 	i = 0;
-	while (ft_strchr("0 -123456789.hfdl", (*format)[i]) && *format != '\0')
+	let = (*format)[i];
+	while (ft_strchr("0 -123456789.hfdl", let) != NULL && *format != '\0')
 		i++;
 
 		
@@ -55,23 +43,24 @@ int	ft_printf(const char *restrict format, ...)
 
 	va_start(arg, format);
 	count = 0;
-	while (*format != '\0')
+	str = (char *)format;
+	while (*str != '\0')
 	{
-		if (*format == '%' && (*format + 1) == '%')
+		if (*str == '%' && (*str + 1) == '%')
 		{
-			format++;
+			str++;
 			write(1, "%", 1);
 			char_printed++;
 		}
-		else if (*format == '%' && (*format + 1) != '%')
-			char_printed += parse_percent(&format);
+		else if (*str == '%' && (*str + 1) != '%')
+			char_printed += parse_percent(&str);
 		else
 		{
-			write(1, &(*format), 1);
+			write(1, &(*str), 1);
 			char_printed++;
 		}
-		if (*format != '\0')
-			format++;
+		if (*str != '\0')
+			str++;
 	}
 	va_end(arg);
 	return (char_printed);
@@ -79,7 +68,7 @@ int	ft_printf(const char *restrict format, ...)
 
 int	main(int ac, char **av)
 {
-	printf("AAAAAAA\n%%%");
+	ft_printf("AAAAAAA\n%%");
 	//printf("Hello! %+10s\n %#x %#X %010d %010d", "Elena", 1234, 1234, 1, -123567899);
 	return (0);
 }
