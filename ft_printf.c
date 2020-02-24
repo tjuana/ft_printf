@@ -6,7 +6,7 @@
 /*   By: ccriston <ccriston@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/22 16:16:07 by ccriston          #+#    #+#             */
-/*   Updated: 2020/02/24 14:47:02 by ccriston         ###   ########.fr       */
+/*   Updated: 2020/02/24 16:07:17 by ccriston         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,33 +32,54 @@ void	ft_putstr(char const *s)
 	}
 }
 
+
+
+int		parse_percent(char **format)
+{
+	int		i;
+
+	i = 0;
+	while (ft_strchr("0 -123456789.hfdl", (*format)[i]) && *format != '\0')
+		i++;
+
+		
+	return (i);
+}
+
 int	ft_printf(const char *restrict format, ...)
 {
-	va_list	vlist;
-	int		i;
+	va_list	arg;
+	int		char_printed;
 	int		count;
 	char	*str;
 
-	va_start(vlist, format);
-	i = 0;
+	va_start(arg, format);
 	count = 0;
-	while (format[i] != '\0')
+	while (*format != '\0')
 	{
-		if  (format[i] == '%')
-			if (format[i+1] == '%')
-			{
-				vlist ;
-				count++;
-			}
-		i++;
+		if (*format == '%' && (*format + 1) == '%')
+		{
+			format++;
+			write(1, "%", 1);
+			char_printed++;
+		}
+		else if (*format == '%' && (*format + 1) != '%')
+			char_printed += parse_percent(&format);
+		else
+		{
+			write(1, &(*format), 1);
+			char_printed++;
+		}
+		if (*format != '\0')
+			format++;
 	}
-	va_end(vlist);
-	return (0);
+	va_end(arg);
+	return (char_printed);
 }
 
 int	main(int ac, char **av)
 {
-	ft_printf("AAAAAAA\n%%");
+	printf("AAAAAAA\n%%%");
 	//printf("Hello! %+10s\n %#x %#X %010d %010d", "Elena", 1234, 1234, 1, -123567899);
 	return (0);
 }
