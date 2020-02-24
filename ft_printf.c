@@ -6,7 +6,7 @@
 /*   By: ccriston <ccriston@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/22 16:16:07 by ccriston          #+#    #+#             */
-/*   Updated: 2020/02/24 16:35:31 by ccriston         ###   ########.fr       */
+/*   Updated: 2020/02/24 16:39:02 by ccriston         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ int	ft_printf(const char *restrict format, ...)
 	str = (char *)format;
 	while (*str != '\0')
 	{
-		if (*str == '%' && (*str + 1) == '%')
+		if (*str == '%' && *(str + 1) == '%')
 		{
 			str++;
 			write(1, "%", 1);
