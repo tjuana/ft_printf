@@ -21,7 +21,7 @@ C_BG_GREY = \033[47m
 C_BASIC = \033[0m
 
 
-FLAGS = gcc -Wall -Wextra -Werror
+FLAGS = gcc 
 
 INC = include/printf.h libft/includes/libft.h
 
@@ -33,7 +33,7 @@ OBJ = $(addprefix $(OBJ_DIR), $(OBJ_FILES))
 
 all: lib $(NAME)
 
-$(OBJ): $(SRC) $(INC)
+$(OBJ): 
 		mkdir -p $(OBJ_DIR)
 		$(FLAGS) -c $(SRC) -I ./include 
 
