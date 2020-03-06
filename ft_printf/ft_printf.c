@@ -6,15 +6,11 @@
 /*   By: tjuana <tjuana@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/22 16:16:07 by ccriston          #+#    #+#             */
-/*   Updated: 2020/03/06 14:56:59 by tjuana           ###   ########.fr       */
+/*   Updated: 2020/03/06 17:56:57 by tjuana           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdio.h>
-#include <stdarg.h>
-#include <stdlib.h>
-#include <unistd.h>
-#include "libft/libft.h"
+#include "ft_printf.h"
 
 int		parse_percent(char **format, va_list *arg)
 {
@@ -76,10 +72,3 @@ int	ft_printf(const char *restrict format, ...)
 	return (char_printed);
 }
 
-int	main(int ac, char **av)
-{
-	//ft_printf("AAAAAAA\n%% wpej %c" , 'q');
-	ft_printf("AAAAAAA\n%% wpej %c %s $d %s %c" , 'q', "Qweq", 324, "qq", 'g');
-	// printf("Hello!  %hd ", (short)12222);
-	return (0);
-}
