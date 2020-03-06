@@ -20,43 +20,39 @@ C_BG_GREY = \033[47m
 
 C_BASIC = \033[0m
 
-PROJECT_TEXT = $(C_BASIC)$(C_TX_MAGENTA)LIBS:     $(C_BASIC)\t
-FLAGS = -Wall -Wextra -Werror
 
-PRINTF_SRCS_NAME = ft_printf
-PRINTF_SRCS_PATH = ./$(PRINTF_SRCS_NAME)/
-PRINTF_SRCS_FILES = ft_printf.c 
-PRINTF_SRCS = $(addprefix $(PRINTF_SRCS_PATH), $(PRINTF_SRCS_FILES))
+FLAGS = gcc -Wall -Wextra -Werror
 
-PRINTF_OBJS_PATH = ./obj/
-PRINTF_OBJS_FILES = $(PRINTF_SRCS_FILES:.c=.o)
-PRINTF_OBJS = $(addprefix $(PRINTF_OBJS_PATH), $(PRINTF_OBJS_FILES))
+INC = include/printf.h libft/includes/libft.h
 
-INCLUDES = -I ./ft_printf -I ./libft -I ./inc
-HEADERS_PATH = ./inc/
-HEADERS_FILES = ft_printf.h libft.h
-HEADERS = $(addprefix $(HEADERS_PATH), $(HEADERS_FILES))
+SRC = ft_printf.c
 
-all: $(NAME)
+OBJ_DIR = ./obj/
+OBJ_FILES = $(SRC:.c=.o)
+OBJ = $(addprefix $(OBJ_DIR), $(OBJ_FILES))
 
-$(NAME): $(PRINTF_OBJS) $(HEADERS)
-	@ar rc $(NAME) $(PRINTF_OBJS) $(LIB)
-	@ranlib $(NAME)
-	@echo " "
-	@echo "\033[A\033[K\033[A"
-	@echo "$(PROJECT_TEXT)Finished!"
+all: lib $(NAME)
 
-$(PRINTF_OBJS_PATH)%.o: $(PRINTF_SRCS_PATH)%.c
-	@/bin/echo -n "."
-	@mkdir $(PRINTF_OBJS_PATH) 2>/dev/null || echo "" > /dev/null
-	@gcc $(FLAGS) $(INCLUDES) -c $< -o $@
+$(OBJ): $(SRC) $(INC)
+		mkdir -p $(OBJ_DIR)
+		$(FLAGS) -c $(SRC) -I ./include 
+
+$(NAME):	$(OBJ)
+		$(FLAGS) $(OBJ) -I ./include -L ./libft/ -lft -o $(NAME)
+		ar rc $(NAME) $(OBJ)
+		ranlib $(NAME)
+
+lib:
+		make -C ./libft
 
 clean:
-	@rm -fv $(PRINTF_OBJS) > /dev/null
-	@rm -rf $(PRINTF_OBJS_PATH) > /dev/null
+		rm -rf $(OBJ)
+		make -C ./libft clean
 
 fclean: clean
-	@rm -fv $(NAME) > /dev/null
+		rm -f $(NAME)
+		make -C ./libft fclean
+
 
 re: fclean all
 
