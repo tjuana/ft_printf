@@ -1,13 +1,13 @@
-  
 {
     "configurations": [
         {
             "name": "Mac",
             "includePath": [
                 "${workspaceFolder}/include/**",
-				"/.brew/Cellar/sdl2/2.0.10/include/**",
-				"${workspaceFolder}/includes/**",
-				"${workspaceFolder}/libft/includes/*"
+                "/.brew/Cellar/sdl2/2.0.10/include/**",
+                "${workspaceFolder}/includes/**",
+                "${workspaceFolder}/libft/includes/*",
+                "${workspaceFolder}/inc"
             ],
             "defines": [],
             "macFrameworkPath": [
