@@ -6,7 +6,7 @@
 /*   By: ccriston <ccriston@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/22 16:16:07 by ccriston          #+#    #+#             */
-/*   Updated: 2020/02/24 16:39:02 by ccriston         ###   ########.fr       */
+/*   Updated: 2020/03/06 14:55:06 by ccriston         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,21 +16,25 @@
 #include <unistd.h>
 #include "libft/libft.h"
 
-
-
-
-
-int		parse_percent(char **format)
+int		parse_percent(char **format, va_list *arg)
 {
 	int		i;
 	char	let;
+	char	*str;
 
 	i = 0;
 	let = (*format)[i];
-	while (ft_strchr("0 -123456789.hfdl", let) != NULL && *format != '\0')
+	//write(1, &arg[0], 1);
+//	long long nb;
+//	nb = (long long)va_arg(arg, long long);
+	
+	while ((str = ft_strchr("0+-123456789.hlqjzt", let)) != NULL && *format != '\0')
+	{
+				
 		i++;
-
-		
+		let = (*format)[i];
+	}
+	
 	return (i);
 }
 
@@ -53,7 +57,13 @@ int	ft_printf(const char *restrict format, ...)
 			char_printed++;
 		}
 		else if (*str == '%' && (*str + 1) != '%')
-			char_printed += parse_percent(&str);
+		{
+			str++;
+			count = parse_percent(&str, &arg);
+			str += count;
+			//printf(" %s", str);
+			char_printed += count;
+		}
 		else
 		{
 			write(1, &(*str), 1);
@@ -68,7 +78,8 @@ int	ft_printf(const char *restrict format, ...)
 
 int	main(int ac, char **av)
 {
-	ft_printf("AAAAAAA\n%%");
-	//printf("Hello! %+10s\n %#x %#X %010d %010d", "Elena", 1234, 1234, 1, -123567899);
+	//ft_printf("AAAAAAA\n%% wpej %c" , 'q');
+	ft_printf("AAAAAAA\n%% wpej %c %s $d %s %c" , 'q', "Qweq", 324, "qq", 'g');
+	// printf("Hello!  %hd ", (short)12222);
 	return (0);
 }
